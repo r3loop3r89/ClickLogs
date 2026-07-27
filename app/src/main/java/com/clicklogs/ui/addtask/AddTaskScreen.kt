@@ -35,6 +35,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -108,7 +109,7 @@ fun AddTaskScreen(
                     value = uiState.name,
                     onValueChange = viewModel::onNameChange,
                     modifier = Modifier.fillMaxWidth(),
-                    placeholder = { Text("e.g. Taken Acidity Medicine") },
+                    placeholder = { Text("e.g. Taking Acidity Medicine") },
                     isError = uiState.nameError != null,
                     supportingText = uiState.nameError?.let { { Text(it) } },
                     shape = RoundedCornerShape(12.dp),
