@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -80,6 +81,22 @@ fun AddTaskScreen(
                 navigationIcon = {
                     IconButton(onClick = onCancel) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                    }
+                },
+                actions = {
+                    IconButton(
+                        onClick = viewModel::saveTask,
+                        enabled = uiState.name.isNotBlank()
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Check,
+                            contentDescription = "Save Task",
+                            tint = if (uiState.name.isNotBlank()) {
+                                MaterialTheme.colorScheme.onPrimaryContainer
+                            } else {
+                                MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.35f)
+                            }
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
@@ -204,28 +221,6 @@ fun AddTaskScreen(
                         }
                     }
                 }
-            }
-
-            Spacer(Modifier.height(8.dp))
-
-            // Action buttons
-            Button(
-                onClick = viewModel::saveTask,
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp)
-            ) {
-                Text(
-                    text = if (editTaskId != null) "Save Changes" else "Add Task",
-                    style = MaterialTheme.typography.labelLarge,
-                    modifier = Modifier.padding(vertical = 4.dp)
-                )
-            }
-
-            TextButton(
-                onClick = onCancel,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            ) {
-                Text("Cancel")
             }
         }
     }
