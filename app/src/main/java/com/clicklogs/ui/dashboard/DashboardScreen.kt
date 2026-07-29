@@ -293,6 +293,12 @@ fun DashboardScreen(
                                 contentDescription = "Search"
                             )
                         }
+                        IconButton(onClick = onNavigateToAddTask) {
+                            Icon(
+                                imageVector = Icons.Default.Add,
+                                contentDescription = "Add Task"
+                            )
+                        }
                     }
                     IconButton(onClick = onNavigateToReports) {
                         Icon(
@@ -307,19 +313,6 @@ fun DashboardScreen(
                     actionIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer
                 )
             )
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = onNavigateToAddTask,
-                containerColor = MaterialTheme.colorScheme.primary,
-                shape = RoundedCornerShape(16.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Add Task",
-                    tint = MaterialTheme.colorScheme.onPrimary
-                )
-            }
         },
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { innerPadding ->
