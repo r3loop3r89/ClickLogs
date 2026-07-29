@@ -985,31 +985,22 @@ private fun PlusOneAnimation(
 }
 
 private fun vibrateTick(vibrator: Vibrator, isPress: Boolean) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-        val effectId = if (isPress) {
-            VibrationEffect.EFFECT_HEAVY_CLICK
-        } else {
-            VibrationEffect.EFFECT_TICK
-        }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val duration = if (isPress) 35L else 20L
+        val amplitude = if (isPress) 255 else 180
         try {
-            vibrator.vibrate(VibrationEffect.createPredefined(effectId))
+            vibrator.vibrate(VibrationEffect.createOneShot(duration, amplitude))
         } catch (e: Exception) {
-            fallbackVibrate(vibrator, isPress)
+            vibrateLegacy(vibrator, isPress)
         }
     } else {
-        fallbackVibrate(vibrator, isPress)
+        vibrateLegacy(vibrator, isPress)
     }
 }
 
-private fun fallbackVibrate(vibrator: Vibrator, isPress: Boolean) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        val duration = if (isPress) 15L else 10L
-        val amplitude = if (isPress) 220 else 150
-        vibrator.vibrate(VibrationEffect.createOneShot(duration, amplitude))
-    } else {
-        @Suppress("DEPRECATION")
-        vibrator.vibrate(if (isPress) 15L else 10L)
-    }
+private fun vibrateLegacy(vibrator: Vibrator, isPress: Boolean) {
+    @Suppress("DEPRECATION")
+    vibrator.vibrate(if (isPress) 35L else 20L)
 }
 
 private fun formatRelativeTime(timestamp: Long): String {
